@@ -7,7 +7,7 @@ import axios from "axios";
 export const andrewMeadApi = async () => {
   try {
     const res = await axios.get("https://puzzle.mead.io/puzzle?wordCount=2");
-    if (data.status <= 300 && data.status >= 200) {
+    if (res.status <= 300 && res.status >= 200) {
       return res.data;
     } else {
       throw new Error("random word api returned bad response code");

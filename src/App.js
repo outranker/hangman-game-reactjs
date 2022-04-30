@@ -4,9 +4,10 @@ import Main from "./pages/Main";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-    </Routes>
+    <Main />
+    // <Routes>
+    //   <Route path="/" element={<Main />} />
+    // </Routes>
   );
 };
 
