@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 
 const Main = () => {
   const [words, setWords] = useState([]);
+  const [letters, setLetters] = useState([]);
   const [usedLetters, setUsedLetters] = useState([]);
   const [definitions, setDefinitions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,26 +19,37 @@ const Main = () => {
   const onKeyPress = (button) => {
     console.log("Button pressed", button);
   };
+  const resetButtonClick = (button) => {
+    console.log("Reset Button pressed", button);
+  };
+  window.addEventListener("keypress", (e) => {
+    const letter = String.fromCharCode(e.charCode);
+    if (!usedLetters.find((l) => letter.toUpperCase() === l)) {
+      setUsedLetters((oldArray) => [...oldArray, letter.toUpperCase()]);
+    }
 
+    console.log("Button pressed", letter);
+  });
   useEffect(() => {
     const f1 = async () => {
       setLoading(true);
       const w = await andrewMeadApi();
       setLoading(false);
       setWords(w.puzzle.split(" ").map((i) => i.toUpperCase()));
+      setLetters(w.puzzle.split("").map((e) => e.toUpperCase()));
     };
     f1();
   }, []);
-
+  console.log({ letters, words });
   const renderStars = () => {
     const count = (Array.isArray(words) && words.length) || 0;
     console.log(count);
     if (count) {
       let arr = [];
       for (let i = 0; i < words.length; i++) {
-        let stars = words[i].split("").map((el) => (
+        let stars = letters.map((el) => (
           <LetterCard key={nanoid()} isWord={true}>
-            *
+            {usedLetters.indexOf(el) !== -1 ? el : "*"}
           </LetterCard>
         ));
         arr = [...arr, ...stars];
@@ -48,7 +60,7 @@ const Main = () => {
             </LetterCard>
           );
       }
-      console.log("MY ARRAY", arr);
+
       return arr;
     }
   };
