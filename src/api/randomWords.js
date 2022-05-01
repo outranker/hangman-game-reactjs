@@ -4,9 +4,11 @@ import axios from "axios";
  * fetches 2 random words from an API
  * made by Andrew Mead
  */
-export const andrewMeadApi = async () => {
+export const andrewMeadApi = async (count = 2) => {
   try {
-    const res = await axios.get("https://puzzle.mead.io/puzzle?wordCount=2");
+    const res = await axios.get(
+      `https://puzzle.mead.io/puzzle?wordCount=${count}`
+    );
     if (res.status <= 300 && res.status >= 200) {
       return res.data;
     } else {
