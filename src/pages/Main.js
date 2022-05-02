@@ -10,9 +10,11 @@ import { nanoid } from "nanoid";
 
 const Main = () => {
   const [words, setWords] = useState([]);
-  const [letters, setLetters] = useState([]);
-  const [usedLetters, setUsedLetters] = useState([]);
-  const [definitions, setDefinitions] = useState([]);
+  const [letters, setLetters] = useState([]); // stores metadata about lettes
+  const [usedLetters, setUsedLetters] = useState([]); // only has unique letters
+  const [guesses, setGuesses] = useState([]); // all the pressed/used keys
+  const [chances, setChances] = useState(9); // how many times can be guessed
+  const [definitions, setDefinitions] = useState([]); // stores definitions
   const [loading, setLoading] = useState(false);
   const keyboard = useRef();
 
@@ -34,31 +36,38 @@ const Main = () => {
     const f1 = async () => {
       setLoading(true);
       const w = await andrewMeadApi();
-      setLoading(false);
+      const temp = [];
+      w.puzzle
+        .split("")
+        .map((e) => e.toUpperCase())
+        .forEach((l) =>
+          temp.push({
+            id: nanoid(),
+            letter: l,
+            isFound: false,
+            isWhiteSpace: l === " " ? true : false,
+          })
+        );
+      console.log("this is temp", temp);
+
       setWords(w.puzzle.split(" ").map((i) => i.toUpperCase()));
-      setLetters(w.puzzle.split("").map((e) => e.toUpperCase()));
+      setLetters(temp);
+      setLoading(false);
     };
     f1();
   }, []);
-  console.log({ letters, words });
+
   const renderStars = () => {
     const count = (Array.isArray(words) && words.length) || 0;
-    console.log(count);
+    console.log(letters.length);
     if (count) {
-      let arr = [];
+      let arr;
       for (let i = 0; i < words.length; i++) {
-        let stars = letters.map((el) => (
-          <LetterCard key={nanoid()} isWord={true}>
-            {usedLetters.indexOf(el) !== -1 ? el : "*"}
+        arr = letters.map((el) => (
+          <LetterCard key={el.id} isWhiteSpace={el.isWhiteSpace}>
+            {el.isWhiteSpace ? " " : letters.isFound ? el.letter : "*"}
           </LetterCard>
         ));
-        arr = [...arr, ...stars];
-        if (i !== words.length - 1)
-          arr.push(
-            <LetterCard key={nanoid()} isWord={false}>
-              {" "}
-            </LetterCard>
-          );
       }
 
       return arr;
@@ -87,14 +96,14 @@ const Main = () => {
           <DefinitionsWrapper>
             <p>Definition 2</p>
           </DefinitionsWrapper>
-          <KeyboarWrapper>
+          {/* <KeyboarWrapper>
             <Keyboard
               keyboardRef={(r) => (keyboard.current = r)}
               layoutName={"default"}
               layout={customLayout}
               onKeyPress={onKeyPress}
             />
-          </KeyboarWrapper>
+          </KeyboarWrapper> */}
         </Center>
         <Right />
       </Content>
@@ -127,14 +136,14 @@ const Center = styled.div`
   display: grid;
 `;
 const LettersWrapper = styled.span`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid: row;
   font-size: large;
   padding: 0 16px 0 16px;
 `;
 const LetterCard = styled.div`
   border-bottom: ${(props) => {
-    if (props.isWord) {
+    if (!props.isWhiteSpace) {
       return "1px solid #69778c;";
     } else return;
   }};
