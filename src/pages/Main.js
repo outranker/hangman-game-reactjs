@@ -69,17 +69,35 @@ const Main = () => {
   const reset = () => {};
   return (
     <OuterWrapper>
-      <Wrapper>
-        <LettersWrapper>{loading ? <Loading /> : renderStars()}</LettersWrapper>
-        <KeyboarWrapper>
-          <Keyboard
-            keyboardRef={(r) => (keyboard.current = r)}
-            layoutName={"default"}
-            layout={customLayout}
-            onKeyPress={onKeyPress}
-          />
-        </KeyboarWrapper>
-      </Wrapper>
+      <Content>
+        <Left />
+        <Center>
+          <LettersWrapper>
+            {loading ? <Loading /> : renderStars()}
+          </LettersWrapper>
+          <GuessesWrapper>
+            <p>This is guesses placeholder</p>
+          </GuessesWrapper>
+          <ResetButtonWrapper>
+            <button>Reset</button>
+          </ResetButtonWrapper>
+          <DefinitionsWrapper>
+            <p>Definition 1</p>
+          </DefinitionsWrapper>
+          <DefinitionsWrapper>
+            <p>Definition 2</p>
+          </DefinitionsWrapper>
+          <KeyboarWrapper>
+            <Keyboard
+              keyboardRef={(r) => (keyboard.current = r)}
+              layoutName={"default"}
+              layout={customLayout}
+              onKeyPress={onKeyPress}
+            />
+          </KeyboarWrapper>
+        </Center>
+        <Right />
+      </Content>
     </OuterWrapper>
   );
 };
@@ -88,15 +106,25 @@ const OuterWrapper = styled.div`
   height: 100vh;
   width: 100vw;
 `;
-const Wrapper = styled.div`
+const Content = styled.div`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto;
+`;
+const Left = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+const Right = styled.div`
+  height: 100%;
+  width: 100%;
+`;
+const Center = styled.div`
+  height: 100%;
+  width: 100%;
+  display: grid;
 `;
 const LettersWrapper = styled.span`
   display: flex;
@@ -116,12 +144,15 @@ const LetterCard = styled.div`
 `;
 const GuessesWrapper = styled.div``;
 const ResetButtonWrapper = styled.div``;
-const DefinitionsWrapper = styled.div``;
+const DefinitionsWrapper = styled.div`
+  margin-bottom: 150px;
+`;
 const KeyboarWrapper = styled.div`
   position: absolute;
+  height: 150px;
   width: 100%;
   bottom: 0;
-  margin-top: 24px;
+  /* margin-top: 24px; */
   color: black;
   @media (min-width: 769px) {
     display: none;
