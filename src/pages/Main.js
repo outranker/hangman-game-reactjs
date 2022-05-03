@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import useKeypress from "react-use-keypress";
 import { andrewMeadApi } from "../api/randomWords";
 import _ from "lodash";
 import Stars from "../components/Stars";
 // import Keyboard from "react-simple-keyboard";
-import "react-simple-keyboard/build/css/index.css";
+// import "react-simple-keyboard/build/css/index.css";
 // import { layout as customLayout } from "../utils";
 import Loading from "../components/Loading/Loading";
 import { nanoid } from "nanoid";
+import { keys } from "../utils";
 
 const Main = () => {
   const [words, setWords] = useState([]);
@@ -20,24 +22,29 @@ const Main = () => {
   const [loading, setLoading] = useState(false);
   const keyboard = useRef();
 
-  const onKeyPress = (button) => {
-    console.log("Button pressed", button);
-  };
-  const resetButtonClick = (button) => {
-    console.log("Reset Button pressed", button);
-  };
-  useEffect(() => {
-    window.addEventListener("keypress", (e) => {
-      console.log({ chances });
+  // const onKeyPress = (button) => {
+  //   console.log("Button pressed", button);
+  // };
+  // const resetButtonClick = (button) => {
+  //   console.log("Reset Button pressed", button);
+  // };
 
-      const letter = e.key;
-      setLastLetter(letter.toUpperCase());
-    });
+  useKeypress(keys, (event) => {
+    console.log(event);
+  });
 
-    return () => {
-      window.removeEventListener("keypress", () => {});
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("keypress", (e) => {
+  //     console.log({ chances });
+
+  //     const letter = e.key;
+  //     setLastLetter(letter.toUpperCase());
+  //   });
+
+  //   return () => {
+  //     window.removeEventListener("keypress", () => {});
+  //   };
+  // }, []);
 
   useEffect(() => {
     const uniq = _.uniq(guesses);
