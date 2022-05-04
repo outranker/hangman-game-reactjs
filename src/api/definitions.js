@@ -7,6 +7,7 @@ import axios from "axios";
 export const fetchDefinitions = async (words) => {
   try {
     const [word1, word2] = words;
+
     const p1 = axios.get(
       `https://hangman-api.javohirmirzo.fun/v1/hangman/get-word-definition?word=${word1}`
     );
@@ -16,14 +17,13 @@ export const fetchDefinitions = async (words) => {
 
     const pList = [p1, p2];
     const p = await Promise.all(pList);
-    return p;
 
-    // if (data.status <= 300 && data.status >= 200) {
-    //   return res.data;
-    // } else {
-    //   throw new Error("random word api returned bad response code");
-    // }
+    const d1 = p[0].data.result.data[0].meanings[0].definitions[0].definition;
+    const d2 = p[1].data.result.data[0].meanings[0].definitions[0].definition;
+
+    return [d1, d2];
   } catch (error) {
+    console.log(error);
     throw new Error(
       "hangman api error, could not receive response from api:" + error?.message
     );

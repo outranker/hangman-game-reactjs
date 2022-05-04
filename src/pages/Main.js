@@ -1,96 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useKeypress from "react-use-keypress";
-import { andrewMeadApi } from "../api/randomWords";
-import _ from "lodash";
-import Stars from "../components/Stars";
-// import Keyboard from "react-simple-keyboard";
-// import "react-simple-keyboard/build/css/index.css";
-// import { layout as customLayout } from "../utils";
 import Loading from "../components/Loading/Loading";
 import { nanoid } from "nanoid";
 import { keys } from "../utils";
+import { useCounterReducer } from "../hooks/useCounter";
+import useInitialCall from "../hooks/useInitialCall";
 
 const Main = () => {
-  const [words, setWords] = useState([]);
-  const [letters, setLetters] = useState([]); // stores metadata about lettes
-  const [uniqueLetters, setUniqueLetters] = useState([]); // only has unique letters
-  const [lastLetter, setLastLetter] = useState(""); // only has unique letters
-  const [guesses, setGuesses] = useState([]); // all the pressed/used keys
-  const [chances, setChances] = useState(9); // how many times can be guessed
-  const [definitions, setDefinitions] = useState([]); // stores definitions
-  const [loading, setLoading] = useState(false);
-  const keyboard = useRef();
-
-  // const onKeyPress = (button) => {
-  //   console.log("Button pressed", button);
-  // };
-  // const resetButtonClick = (button) => {
-  //   console.log("Reset Button pressed", button);
-  // };
+  const [words, letters, loading, definitions] = useInitialCall();
+  const [uniqueLetters, setUniqueLetters] = useState([]);
+  const [count, countReducer] = useCounterReducer();
 
   useKeypress(keys, (event) => {
-    console.log(event);
+    if (count > 0) {
+      const press = event.key.toUpperCase();
+
+      if (!uniqueLetters.find((item) => item === press)) {
+        setUniqueLetters((u) => [...u, press]);
+        countReducer({ type: "decrement" });
+      }
+    } else if (count === 0) {
+    } else {
+    }
   });
-
-  // useEffect(() => {
-  //   window.addEventListener("keypress", (e) => {
-  //     console.log({ chances });
-
-  //     const letter = e.key;
-  //     setLastLetter(letter.toUpperCase());
-  //   });
-
-  //   return () => {
-  //     window.removeEventListener("keypress", () => {});
-  //   };
-  // }, []);
-
-  useEffect(() => {
-    const uniq = _.uniq(guesses);
-    setChances((ch) => ch - uniq.length);
-    setUniqueLetters((l) => [...l, uniq]);
-    // if (!uniqueLetters.find((l) => letter.toUpperCase() === l)) {
-    //   setUniqueLetters((oldArray) => [...oldArray, letter.toUpperCase()]);
-    //   if (chances > 0) {
-    //     setChances((ch) => --ch);
-    //   } else {
-    //     setChances(0);
-    //   }
-    // }
-  }, [lastLetter]);
-
-  useEffect(() => {
-    const f1 = async () => {
-      setLoading(true);
-      const w = await andrewMeadApi();
-      // const w = {
-      //   puzzle: "JKJKJJKKJFJFJHHDHDGDGDGGFHFH POIUYTREWQASDFGHJKKLMNBBVV",
-      // };
-
-      const temp = [];
-      w.puzzle
-        .split("")
-        .map((e) => e.toUpperCase())
-        .forEach((l) =>
-          temp.push({
-            id: nanoid(),
-            letter: l,
-            isFound: false,
-            isWhiteSpace: l === " " ? true : false,
-          })
-        );
-
-      setWords(w.puzzle.split(" ").map((i) => i.toUpperCase()));
-      setLetters(temp);
-      setLoading(false);
-    };
-    f1();
-  }, []);
 
   const renderStars = () => {
     const count = (Array.isArray(words) && words.length) || 0;
-    console.log(letters.length);
+
     if (count) {
       let arr = [];
       const whiteSpaceIndex = letters.findIndex((item) => item.isWhiteSpace);
@@ -140,35 +77,27 @@ const Main = () => {
     <OuterWrapper>
       <Wrapper>
         <Hangman>
+          <div>{}</div>
           <LettersWrapper>
             {loading ? <Loading /> : renderStars()}
           </LettersWrapper>
           <Meta>
             <GuessesWrapper>
               <div>
-                Guesses remaining: {chances}
-                {guesses}
+                Guesses remaining: {count} {uniqueLetters}
               </div>
             </GuessesWrapper>
             <ResetButtonWrapper>
               <ResetButton>Reset</ResetButton>
             </ResetButtonWrapper>
-            <DefinitionsWrapper>
-              <div>Definition 1</div>
+            <DefinitionsWrapper className="font-mono subpixel-antialiased">
+              1. <div>{definitions?.[0]}</div>
             </DefinitionsWrapper>
-            <DefinitionsWrapper>
-              <div>Definition 2</div>
+            <DefinitionsWrapper className="font-mono subpixel-antialiased">
+              2. <div>{definitions?.[1]}</div>
             </DefinitionsWrapper>
           </Meta>
         </Hangman>
-        {/* <KeyboarWrapper>
-            <Keyboard
-              keyboardRef={(r) => (keyboard.current = r)}
-              layoutName={"default"}
-              layout={customLayout}
-              onKeyPress={onKeyPress}
-            />
-          </KeyboarWrapper> */}
       </Wrapper>
     </OuterWrapper>
   );
@@ -253,7 +182,6 @@ const DefinitionsWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   align-content: flex-start;
-  /* margin-bottom: 150px; */
 `;
 const SomeWrapper = styled.div`
   display: flex;
@@ -261,16 +189,6 @@ const SomeWrapper = styled.div`
   font-size: 1.2rem;
   justify-content: flex-start;
   margin: 8px 5px 8px 5px;
-`;
-const KeyboarWrapper = styled.div`
-  position: absolute;
-  height: 150px;
-  width: 100%;
-  bottom: 0;
-  color: black;
-  @media (min-width: 769px) {
-    display: none;
-  }
 `;
 
 export default Main;
