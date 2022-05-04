@@ -16,7 +16,7 @@ const Main = () => {
   useKeypress(keys, (event) => {
     if (count > 0) {
       const press = event.key.toUpperCase();
-      console.log(letters);
+
       if (!uniqueLetters.find((item) => item === press)) {
         setUniqueLetters((u) => [...u, press]);
         const letterIndex = letters.findIndex((l) => l.letter === press);
@@ -25,12 +25,10 @@ const Main = () => {
         if (letterIndex === -1) countReducer({ type: "decrement" });
 
         if (letterIndex !== -1 && !letters[letterIndex].isFound) {
-          console.log(letterIndex);
-          let t = letters[letterIndex];
           setLetters([
             ...letters.map((i) => {
-              if (i.id === t.id) {
-                return { ...t, isFound: true };
+              if (i.letter === press) {
+                return { ...i, isFound: true };
               } else return i;
             }),
           ]);
@@ -58,7 +56,7 @@ const Main = () => {
           >
             {letters[k].isWhiteSpace
               ? " "
-              : letters.isFound
+              : letters[k].isFound
               ? letters[k].letter
               : "*"}
           </LetterCard>
@@ -77,7 +75,7 @@ const Main = () => {
           >
             {letters[j].isWhiteSpace
               ? " "
-              : letters.isFound
+              : letters[j].isFound
               ? letters[j].letter
               : "*"}
           </LetterCard>
