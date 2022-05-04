@@ -20,14 +20,17 @@ const Main = () => {
       if (!uniqueLetters.find((item) => item === press)) {
         setUniqueLetters((u) => [...u, press]);
         const letterIndex = letters.findIndex((l) => l.letter === press);
-        countReducer({ type: "decrement" });
+
+        // only decrement count if it's a wrong guess
+        if (letterIndex === -1) countReducer({ type: "decrement" });
+
         if (letterIndex !== -1 && !letters[letterIndex].isFound) {
           console.log(letterIndex);
           let t = letters[letterIndex];
           setLetters([
             ...letters.map((i) => {
               if (i.id === t.id) {
-                return { ...t, isFound: true, id: nanoid() };
+                return { ...t, isFound: true };
               } else return i;
             }),
           ]);
