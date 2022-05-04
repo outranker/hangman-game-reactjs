@@ -27,10 +27,10 @@ const useInitialCall = () => {
       let wList = w.puzzle.split(" ").map((i) => i.toUpperCase());
       const def = await fetchDefinitions(wList);
       setWords(wList);
-      console.log({ wList });
+
       setLetters(temp);
       setDefinitions(def);
-      console.log({ def });
+
       setLoading(false);
     };
     f1();

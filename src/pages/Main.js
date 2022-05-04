@@ -8,17 +8,30 @@ import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
 
 const Main = () => {
-  const [words, letters, loading, definitions] = useInitialCall();
+  const [words, letters, loading, definitions, setWords, setLetters] =
+    useInitialCall();
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [count, countReducer] = useCounterReducer();
 
   useKeypress(keys, (event) => {
     if (count > 0) {
       const press = event.key.toUpperCase();
-
+      console.log(letters);
       if (!uniqueLetters.find((item) => item === press)) {
         setUniqueLetters((u) => [...u, press]);
+        const letterIndex = letters.findIndex((l) => l.letter === press);
         countReducer({ type: "decrement" });
+        if (letterIndex !== -1 && !letters[letterIndex].isFound) {
+          console.log(letterIndex);
+          let t = letters[letterIndex];
+          setLetters([
+            ...letters.map((i) => {
+              if (i.id === t.id) {
+                return { ...t, isFound: true, id: nanoid() };
+              } else return i;
+            }),
+          ]);
+        }
       }
     } else if (count === 0) {
     } else {
@@ -48,7 +61,8 @@ const Main = () => {
           </LetterCard>
         );
       }
-      arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
+      arr.push(t);
+      // arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
 
       // loop second word - after whiteSpaceIndex
       t = [];
@@ -66,7 +80,8 @@ const Main = () => {
           </LetterCard>
         );
       }
-      arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
+      arr.push(t);
+      // arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
 
       return arr;
     }
@@ -79,7 +94,13 @@ const Main = () => {
         <Hangman>
           <div>{}</div>
           <LettersWrapper>
-            {loading ? <Loading /> : renderStars()}
+            {loading ? (
+              <Loading />
+            ) : (
+              renderStars()?.map((i) => (
+                <SomeWrapper key={nanoid()}>{i}</SomeWrapper>
+              ))
+            )}
           </LettersWrapper>
           <Meta>
             <GuessesWrapper>
