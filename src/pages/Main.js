@@ -90,81 +90,37 @@ const Main = () => {
 
   const reset = () => {};
   return (
-    <OuterWrapper>
-      <Wrapper>
-        <Hangman>
-          <div>{}</div>
-          <LettersWrapper>
-            {loading ? (
-              <Loading />
-            ) : (
-              renderStars()?.map((i) => (
-                <SomeWrapper key={nanoid()}>{i}</SomeWrapper>
-              ))
-            )}
-          </LettersWrapper>
-          <Meta>
-            <GuessesWrapper>
-              <div>
-                Guesses remaining: {count} {uniqueLetters}
-              </div>
-            </GuessesWrapper>
-            <ResetButtonWrapper>
-              <ResetButton>Reset</ResetButton>
-            </ResetButtonWrapper>
-            <DefinitionsWrapper className="font-mono subpixel-antialiased">
-              1. <div>{definitions?.[0]}</div>
-            </DefinitionsWrapper>
-            <DefinitionsWrapper className="font-mono subpixel-antialiased">
-              2. <div>{definitions?.[1]}</div>
-            </DefinitionsWrapper>
-          </Meta>
-        </Hangman>
-      </Wrapper>
-    </OuterWrapper>
+    <>
+      <div
+        className="h-full container lg:mx-auto"
+        style={{ border: "1px white solid" }}
+      >
+        <div className="container mx auto p-4">
+          {loading ? (
+            <Loading />
+          ) : (
+            renderStars()?.map((i) => (
+              <SomeWrapper key={nanoid()}>{i}</SomeWrapper>
+            ))
+          )}
+        </div>
+        <div className="container m-4 p-4">
+          <div>
+            Guesses remaining: {count} {uniqueLetters}
+          </div>
+          <ResetButton className="m-4">Reset</ResetButton>
+          <DefinitionsWrapper className="font-mono subpixel-antialiased">
+            1. <div>{definitions?.[0]}</div>
+          </DefinitionsWrapper>
+          <DefinitionsWrapper className=" p-4 font-mono subpixel-antialiased">
+            2. <div>{definitions?.[1]}</div>
+          </DefinitionsWrapper>
+        </div>
+      </div>
+    </>
   );
 };
 
-const OuterWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-`;
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
-
-const Hangman = styled.div`
-  margin-top: 60px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > div {
-    padding: 10px;
-  }
-`;
-const Meta = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  > div {
-    margin: 15px;
-    margin-left: 0;
-  }
-`;
-const LettersWrapper = styled.div`
-  display: grid;
-  margin: 0 15px 0 15px;
-  font-size: 1.8rem;
-`;
 const LetterCard = styled.div`
   border-bottom: ${(props) => {
     if (!props.isWhiteSpace) {
@@ -175,17 +131,7 @@ const LetterCard = styled.div`
   margin-right: 3px;
   padding: 0 5px 0 5px;
 `;
-const GuessesWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-`;
-const ResetButtonWrapper = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
+
 const ResetButton = styled.button`
   border-radius: 3px;
   background-color: #363658;
