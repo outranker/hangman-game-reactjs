@@ -92,7 +92,7 @@ const Main = () => {
   return (
     <>
       <div
-        className="h-full container lg:mx-auto"
+        className="h-full w-full container lg:mx-auto lg:w-3/4"
         style={{ border: "1px white solid" }}
       >
         <div className="container mx auto p-4">
