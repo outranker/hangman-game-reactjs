@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import { keys } from "../utils";
 import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
+import ResetButton from "../components/ResetButton";
 
 const Main = () => {
   const [words, letters, loading, definitions, setWords, setLetters] =
@@ -108,7 +109,8 @@ const Main = () => {
           <div>
             Guesses remaining: {count} {uniqueLetters}
           </div>
-          <ResetButton className="m-4">Reset</ResetButton>
+          <ResetButton resetStars={renderStars()} />
+          {/* <ResetButton2 className="m-4">Reset</ResetButton2> */}
           <DefinitionsWrapper className="font-mono subpixel-antialiased">
             1. <div>{definitions?.[0]}</div>
           </DefinitionsWrapper>
@@ -132,7 +134,7 @@ const LetterCard = styled.div`
   padding: 0 5px 0 5px;
 `;
 
-const ResetButton = styled.button`
+const ResetButton2 = styled.button`
   border-radius: 3px;
   background-color: #363658;
   border: 1px solid gray;
