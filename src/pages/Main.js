@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import useKeypress from "react-use-keypress";
 import Loading from "../components/Loading/Loading";
 import { nanoid } from "nanoid";
@@ -51,7 +50,15 @@ const Main = () => {
       let t = [];
       for (let k = 0; k < whiteSpaceIndex; k++) {
         t.push(
-          <LetterCard
+          <div
+            style={{
+              borderBottom: `${
+                !letters[k].isWhiteSpace ? "1px solid #69778c" : ""
+              }`,
+              marginLeft: "3px",
+              marginRight: "3px",
+              padding: "0 5px 0 5px",
+            }}
             key={letters[k].id}
             isWhiteSpace={letters[k].isWhiteSpace}
           >
@@ -60,7 +67,7 @@ const Main = () => {
               : letters[k].isFound
               ? letters[k].letter
               : "*"}
-          </LetterCard>
+          </div>
         );
       }
       arr.push(t);
@@ -70,7 +77,15 @@ const Main = () => {
       t = [];
       for (let j = whiteSpaceIndex + 1; j < letters.length; j++) {
         t.push(
-          <LetterCard
+          <div
+            style={{
+              borderBottom: `${
+                !letters[j].isWhiteSpace ? "1px solid #69778c" : ""
+              }`,
+              marginLeft: "3px",
+              marginRight: "3px",
+              padding: "0 5px 0 5px",
+            }}
             key={letters[j].id}
             isWhiteSpace={letters[j].isWhiteSpace}
           >
@@ -79,7 +94,7 @@ const Main = () => {
               : letters[j].isFound
               ? letters[j].letter
               : "*"}
-          </LetterCard>
+          </div>
         );
       }
       arr.push(t);
@@ -89,19 +104,29 @@ const Main = () => {
     }
   };
 
-  const reset = () => {};
   return (
     <>
       <div
         className="h-full w-full container lg:mx-auto lg:w-3/4"
-        style={{ border: "1px white solid" }}
+        style={{ border: "1px red solid" }}
       >
         <div className="container mx auto p-4">
           {loading ? (
             <Loading />
           ) : (
             renderStars()?.map((i) => (
-              <SomeWrapper key={nanoid()}>{i}</SomeWrapper>
+              <div
+                style={{
+                  display: "flex",
+                  flexFlow: "row nowrap",
+                  fontSize: "1.2rem",
+                  justifyContent: "flex-start",
+                  margin: "8px 5px 8px 5px",
+                }}
+                key={nanoid()}
+              >
+                {i}
+              </div>
             ))
           )}
         </div>
@@ -110,55 +135,34 @@ const Main = () => {
             Guesses remaining: {count} {uniqueLetters}
           </div>
           <ResetButton resetStars={renderStars()} />
-          {/* <ResetButton2 className="m-4">Reset</ResetButton2> */}
-          <DefinitionsWrapper className="font-mono subpixel-antialiased">
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "row nowrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+            }}
+            className="font-mono subpixel-antialiased"
+          >
             1. <div>{definitions?.[0]}</div>
-          </DefinitionsWrapper>
-          <DefinitionsWrapper className=" p-4 font-mono subpixel-antialiased">
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "row nowrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+            }}
+            className=" p-4 font-mono subpixel-antialiased"
+          >
             2. <div>{definitions?.[1]}</div>
-          </DefinitionsWrapper>
+          </div>
         </div>
       </div>
     </>
   );
 };
-
-const LetterCard = styled.div`
-  border-bottom: ${(props) => {
-    if (!props.isWhiteSpace) {
-      return "1px solid #69778c;";
-    } else return;
-  }};
-  margin-left: 3px;
-  margin-right: 3px;
-  padding: 0 5px 0 5px;
-`;
-
-const ResetButton2 = styled.button`
-  border-radius: 3px;
-  background-color: #363658;
-  border: 1px solid gray;
-  padding: 6px;
-  :hover {
-    background-color: #61619e;
-  }
-  :active {
-    border: 1px solid green;
-  }
-`;
-const DefinitionsWrapper = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
-`;
-const SomeWrapper = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  font-size: 1.2rem;
-  justify-content: flex-start;
-  margin: 8px 5px 8px 5px;
-`;
 
 export default Main;

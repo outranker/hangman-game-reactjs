@@ -2,7 +2,7 @@
   padding: 15px;
 }
 .loader {
-  --color: white;
+  --color: green;
   --size-mid: 6vmin;
   --size-dot: 1.5vmin;
   --size-bar: 0.4vmin;

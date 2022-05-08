@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { nanoid } from "nanoid";
 
 const Stars = ({ words }) => {
@@ -8,24 +7,27 @@ const Stars = ({ words }) => {
     if (words?.length > 0) {
       let html1 = words[0].split("").map((l) => {
         console.log(l);
-        return <WordWrapper key={nanoid()}>{l}</WordWrapper>;
+        return (
+          <div style={{ display: "block" }} key={nanoid()}>
+            {l}
+          </div>
+        );
       });
 
       let html2 = words[1].split("").map((l) => {
-        return <WordWrapper key={nanoid()}>{l}</WordWrapper>;
+        return (
+          <div style={{ display: "block" }} key={nanoid()}>
+            {l}
+          </div>
+        );
       });
 
       return [...html1, " ", ...html2];
     }
   };
-  return <Wrapper>{renderStars()}</Wrapper>;
+  return (
+    <div style={{ display: "flex", flexDirection: "row" }}>{renderStars()}</div>
+  );
 };
 
 export default Stars;
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-const WordWrapper = styled.div`
-  display: block;
-`;
