@@ -1,17 +1,13 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+// import { Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
 import OuterWrapper from "./components/OuterWrapper";
 import Main from "./pages/Main";
+import theme from "./styles/theme";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 const App = () => {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <OuterWrapper>
         <Main />
       </OuterWrapper>
