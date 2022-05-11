@@ -24,8 +24,20 @@ const useInitialCall = () => {
             isWhiteSpace: l === " " ? true : false,
           })
         );
-      let wList = w.puzzle.split(" ").map((i) => i.toUpperCase());
-      const def = await fetchDefinitions(wList);
+      let wList = w.puzzle
+        .split(" ")
+        .map((i) => i.toUpperCase())
+        .map((w) => ({
+          id: nanoid(),
+          word: w,
+          letters: w.split("").map((e) => ({
+            id: nanoid(),
+            letter: e.toUpperCase(),
+            isFound: false,
+            isWhiteSpace: e === " " ? true : false,
+          })),
+        }));
+      const def = await fetchDefinitions(wList.map((w) => w.word));
       setWords(wList);
       console.log(wList);
       setLetters(temp);

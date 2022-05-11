@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import useKeypress from "react-use-keypress";
 import Loading from "../components/Loading/Loading";
+import { Box } from "@mui/material";
 import { nanoid } from "nanoid";
 import { keys } from "../utils";
 import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
-
+import StarsLayout from "../components/Stars/StarsLayout";
 const Main = () => {
   const [words, letters, loading, definitions, setWords, setLetters] =
     useInitialCall();
@@ -106,8 +107,11 @@ const Main = () => {
 
   return (
     <>
-      <div
-        className="h-full w-full container lg:mx-auto lg:w-3/4"
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
         style={{ border: "1px red solid" }}
       >
         <div className="container mx auto p-4">
@@ -130,6 +134,7 @@ const Main = () => {
             ))
           )}
         </div>
+        <StarsLayout words={words} />
         <div className="container m-4 p-4">
           <div>
             Guesses remaining: {count} {uniqueLetters}
@@ -160,7 +165,7 @@ const Main = () => {
             2. <div>{definitions?.[1]}</div>
           </div>
         </div>
-      </div>
+      </Box>
     </>
   );
 };
