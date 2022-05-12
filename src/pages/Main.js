@@ -7,8 +7,21 @@ import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 const Main = () => {
-  const [words, letters, loading, definitions, setWords, setLetters] =
-    useInitialCall();
+  const [
+    words,
+    letters,
+    loading,
+    definitions,
+    setWords,
+    setLetters,
+    setLoading,
+    setDefinitions,
+    buttonTrigger,
+    setButtonTrigger,
+  ] = useInitialCall();
+  const handleResetButtonClick = () => {
+    setButtonTrigger(!buttonTrigger);
+  };
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [count, countReducer] = useCounterReducer();
   console.log(words);
@@ -61,7 +74,7 @@ const Main = () => {
           <div>
             Guesses remaining: {count} {uniqueLetters}
           </div>
-          <ResetButton onButtonClick={useInitialCall} />
+          <ResetButton onButtonClick={handleResetButtonClick} />
           <div
             style={{
               display: "flex",

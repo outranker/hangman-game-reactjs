@@ -8,6 +8,7 @@ const useInitialCall = () => {
   const [letters, setLetters] = useState([]); // stores metadata about lettes
   const [loading, setLoading] = useState(false);
   const [definitions, setDefinitions] = useState([]);
+  const [buttonTrigger, setButtonTrigger] = useState(false);
   useEffect(() => {
     const f1 = async () => {
       setLoading(true);
@@ -45,7 +46,7 @@ const useInitialCall = () => {
       setLoading(false);
     };
     f1();
-  }, []);
+  }, [buttonTrigger]);
 
   return [
     words,
@@ -56,6 +57,8 @@ const useInitialCall = () => {
     setLetters,
     setLoading,
     setDefinitions,
+    buttonTrigger,
+    setButtonTrigger,
   ];
 };
 

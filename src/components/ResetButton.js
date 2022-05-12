@@ -1,10 +1,7 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const ResetButton = ({ onButtonClick }) => {
-  // const [border, setBorder] = useState(
-  //   "border-solid border border-indigo-500/40"
-  // );
   return (
     <>
       <Button
