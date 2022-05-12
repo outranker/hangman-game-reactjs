@@ -1,23 +1,27 @@
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import StarsCard from "./StarsCard";
-const StarsLayout = ({ words }) => {
-  console.log({ wordsfromstarslayout: words });
+import Loading from "../Loading/Loading";
+
+const StarsLayout = ({ words, loading }) => {
   return (
     <>
       <Box
-        style={{
+        sx={{
           width: "100%",
           height: "100%",
-          // display: "flex",
-          // flexDirection: "column",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "center",
         }}
       >
-        <Grid container spacing={2}>
-          {words.map((item) => (
-            <StarsCard key={item.id} word={item} />
-          ))}
-        </Grid>
+        {loading ? (
+          <Loading />
+        ) : (
+          words.map((item) => <StarsCard key={item.id} word={item} />)
+        )}
       </Box>
     </>
   );

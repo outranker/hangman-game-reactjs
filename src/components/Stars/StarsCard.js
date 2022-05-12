@@ -1,35 +1,26 @@
 import React from "react";
 import Stars from "./Stars";
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 
-const StarsCard = ({ word: item }) => {
-  console.log({ wordsfromStarsCard: item });
-
+const StarsCard = ({ word: item, xs, md }) => {
   return (
     <>
-      <Grid
-        item
-        // xs={6}
-        // md={8}
-        sx={
-          {
-            // display: "flex",
-            // flexDirection: "row",
-            // width: "100%",
-            // p: 1,
-            // m: 1,
-            // alignContent: "center",
-            // alignItems: "center",
-            // justifyItems: "center",
-            // bgcolor: "background.paper",
-            // borderRadius: 1,
-          }
-        }
+      <Box
+        className="lslslslsl"
+        sx={{
+          display: "flex",
+          p: 1,
+          m: 1,
+          alignContent: "center",
+          alignItems: "center",
+          justifyItems: "center",
+          borderRadius: 1,
+        }}
       >
         {item.letters.map((l) => (
           <Stars key={l.id} letter={l} />
         ))}
-      </Grid>
+      </Box>
     </>
   );
 };

@@ -1,13 +1,17 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 
-const ResetButton = ({ resetStars }) => {
+const ResetButton = ({ onButtonClick }) => {
   // const [border, setBorder] = useState(
   //   "border-solid border border-indigo-500/40"
   // );
   return (
     <>
-      <Button variant="contained" color="primary" onClick={() => resetStars()}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => onButtonClick()}
+      >
         Reset
       </Button>
     </>

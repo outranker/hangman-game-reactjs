@@ -1,9 +1,9 @@
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 
 const Stars = ({ letter }) => {
   return (
-    <Grid
+    <Box
       item
       sx={{
         borderBottom: 1,
@@ -14,7 +14,7 @@ const Stars = ({ letter }) => {
       }}
     >
       {letter.isFound ? letter.letter : "*"}
-    </Grid>
+    </Box>
   );
 };
 

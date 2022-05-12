@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import useKeypress from "react-use-keypress";
-import Loading from "../components/Loading/Loading";
 import { Box } from "@mui/material";
-import { nanoid } from "nanoid";
 import { keys } from "../utils";
 import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
@@ -13,97 +11,41 @@ const Main = () => {
     useInitialCall();
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [count, countReducer] = useCounterReducer();
-
+  console.log(words);
   useKeypress(keys, (event) => {
     if (count > 0) {
       const press = event.key.toUpperCase();
 
       if (!uniqueLetters.find((item) => item === press)) {
         setUniqueLetters((u) => [...u, press]);
-        const letterIndex = letters.findIndex((l) => l.letter === press);
+        const flattenLetters = [...words.flatMap((m1) => m1.letters)];
+        console.log("this is flattenLetters", flattenLetters);
+        const letterIndex = flattenLetters.findIndex((l) => l.letter === press);
+        console.log("this is letterIndex", letterIndex);
 
         // only decrement count if it's a wrong guess
         if (letterIndex === -1) countReducer({ type: "decrement" });
 
-        if (letterIndex !== -1 && !letters[letterIndex].isFound) {
-          setLetters([
-            ...letters.map((i) => {
-              if (i.letter === press) {
-                return { ...i, isFound: true };
-              } else return i;
-            }),
-          ]);
+        if (letterIndex !== -1 && !flattenLetters[letterIndex].isFound) {
+          console.log("coming here?");
+          setWords(
+            words.map((m1) => {
+              return {
+                ...m1,
+                letters: m1.letters.map((l1) => {
+                  if (l1.letter === press) {
+                    return { ...l1, isFound: true };
+                  } else return l1;
+                }),
+              };
+            })
+          );
         }
       }
     } else if (count === 0) {
     } else {
     }
   });
-
-  const renderStars = () => {
-    const count = (Array.isArray(words) && words.length) || 0;
-
-    if (count) {
-      let arr = [];
-      const whiteSpaceIndex = letters.findIndex((item) => item.isWhiteSpace);
-
-      // loop first word - until whiteSpaceIndex
-      let t = [];
-      for (let k = 0; k < whiteSpaceIndex; k++) {
-        t.push(
-          <div
-            style={{
-              borderBottom: `${
-                !letters[k].isWhiteSpace ? "1px solid #69778c" : ""
-              }`,
-              marginLeft: "3px",
-              marginRight: "3px",
-              padding: "0 5px 0 5px",
-            }}
-            key={letters[k].id}
-            isWhiteSpace={letters[k].isWhiteSpace}
-          >
-            {letters[k].isWhiteSpace
-              ? " "
-              : letters[k].isFound
-              ? letters[k].letter
-              : "*"}
-          </div>
-        );
-      }
-      arr.push(t);
-      // arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
-
-      // loop second word - after whiteSpaceIndex
-      t = [];
-      for (let j = whiteSpaceIndex + 1; j < letters.length; j++) {
-        t.push(
-          <div
-            style={{
-              borderBottom: `${
-                !letters[j].isWhiteSpace ? "1px solid #69778c" : ""
-              }`,
-              marginLeft: "3px",
-              marginRight: "3px",
-              padding: "0 5px 0 5px",
-            }}
-            key={letters[j].id}
-            isWhiteSpace={letters[j].isWhiteSpace}
-          >
-            {letters[j].isWhiteSpace
-              ? " "
-              : letters[j].isFound
-              ? letters[j].letter
-              : "*"}
-          </div>
-        );
-      }
-      arr.push(t);
-      // arr.push(<SomeWrapper key={nanoid()}>{t}</SomeWrapper>);
-
-      return arr;
-    }
-  };
 
   return (
     <>
@@ -114,32 +56,12 @@ const Main = () => {
         }}
         style={{ border: "1px red solid" }}
       >
-        <div className="container mx auto p-4">
-          {loading ? (
-            <Loading />
-          ) : (
-            renderStars()?.map((i) => (
-              <div
-                style={{
-                  display: "flex",
-                  flexFlow: "row nowrap",
-                  fontSize: "1.2rem",
-                  justifyContent: "flex-start",
-                  margin: "8px 5px 8px 5px",
-                }}
-                key={nanoid()}
-              >
-                {i}
-              </div>
-            ))
-          )}
-        </div>
-        <StarsLayout words={words} />
+        <StarsLayout loading={loading} words={words} />
         <div className="container m-4 p-4">
           <div>
             Guesses remaining: {count} {uniqueLetters}
           </div>
-          <ResetButton resetStars={renderStars()} />
+          <ResetButton onButtonClick={useInitialCall} />
           <div
             style={{
               display: "flex",
