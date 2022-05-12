@@ -1,16 +1,16 @@
 import React from "react";
 // import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import OuterWrapper from "./components/OuterWrapper";
+import Layout from "./components/Layout";
 import Main from "./pages/Main";
 import theme from "./styles/theme";
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <OuterWrapper>
+      <Layout>
         <Main />
-      </OuterWrapper>
+      </Layout>
       {/* // <Routes>
       //   <Route path="/" element={<Main />} />
       // </Routes> */}

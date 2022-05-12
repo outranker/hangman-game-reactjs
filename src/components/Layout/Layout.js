@@ -1,9 +1,13 @@
 import { Box } from "@mui/material";
 import React from "react";
-const OuterWrapper = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <Box
       sx={{
+        display: "flex",
+        alignItems: "center",
+        alignContent: "center",
+        flexDirection: "column",
         backgroundColor: "black",
         color: "white",
         height: "100vh",
@@ -15,4 +19,4 @@ const OuterWrapper = ({ children }) => {
   );
 };
 
-export default OuterWrapper;
+export default Layout;

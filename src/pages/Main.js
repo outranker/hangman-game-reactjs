@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import useKeypress from "react-use-keypress";
 import { Box } from "@mui/material";
@@ -65,12 +66,31 @@ const Main = () => {
       <Box
         sx={{
           display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+          alignContent: "center",
           flexDirection: "column",
+          width: {
+            sm: "100%",
+            md: "700px",
+            lg: "850px",
+          },
+          paddingTop: {
+            sm: "0px",
+            md: "160px",
+            lg: "260px",
+          },
+          // height: "100%",
         }}
-        style={{ border: "1px red solid" }}
+        // style={{ border: "1px red solid" }}
       >
         <StarsLayout loading={loading} words={words} />
-        <div className="container m-4 p-4">
+        <div
+          style={{
+            width: "100%",
+            border: "1px green solid",
+          }}
+        >
           <div>
             Guesses remaining: {count} {uniqueLetters}
           </div>
@@ -78,24 +98,22 @@ const Main = () => {
           <div
             style={{
               display: "flex",
-              flexFlow: "row nowrap",
+              // flexFlow: "row nowrap",
               justifyContent: "flex-start",
               alignItems: "flex-start",
               alignContent: "flex-start",
             }}
-            className="font-mono subpixel-antialiased"
           >
             1. <div>{definitions?.[0]}</div>
           </div>
           <div
             style={{
               display: "flex",
-              flexFlow: "row nowrap",
+              // flexFlow: "row nowrap",
               justifyContent: "flex-start",
               alignItems: "flex-start",
               alignContent: "flex-start",
             }}
-            className=" p-4 font-mono subpixel-antialiased"
           >
             2. <div>{definitions?.[1]}</div>
           </div>
