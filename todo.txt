@@ -1,0 +1,6 @@
+1. fix stars loading position
+2. handle when chances run out
+3. handle when user wins the game
+4. style guess letters: green: existing letter, red: non-existing letter
+5. add animation for when existing letter is input
+6. add skeleton for definitions
