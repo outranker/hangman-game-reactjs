@@ -56,7 +56,10 @@ const Main = () => {
     <>
       <Box
         sx={boxWrapperStyles}
-        style={{ padding: "5px", border: "1px red solid" }}
+        style={{
+          padding: "5px",
+          // border: "1px red solid"
+        }}
       >
         <SectionsCard cardType={"stars"}>
           <StarsLayout loading={loading} words={words} />
@@ -72,8 +75,8 @@ const Main = () => {
         />
         <SectionsCard cardType={"defs"}>
           <Typography>1. {definitions?.[0]}</Typography>
-        </SectionsCard>
-        <SectionsCard cardType={"defs"}>
+          {/* </SectionsCard>
+        <SectionsCard cardType={"defs"}> */}
           <Typography>2. {definitions?.[1]}</Typography>
         </SectionsCard>
         <Box
@@ -103,7 +106,7 @@ export default Main;
 
 const boxWrapperStyles = {
   display: "flex",
-  // justifyContent: "space-around",
+  justifyContent: "space-around",
   alignItems: "center",
   alignContent: "center",
   flexDirection: "column",

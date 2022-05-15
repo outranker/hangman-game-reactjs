@@ -15,7 +15,7 @@ const StarsLayout = ({ words, loading }) => {
           justifyContent: "center",
           alignItems: "center",
           alignContent: "center",
-          border: "1px yellow solid",
+          // border: "1px yellow solid",
         }}
       >
         {loading ? (
