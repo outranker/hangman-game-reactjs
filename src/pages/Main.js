@@ -69,10 +69,12 @@ const Main = () => {
             Guesses remaining: {showGameStatus(count, hasWon, uniqueLetters)}
           </Typography>
         </SectionsCard>
-        <ResetButton
-          cardType={"resetButton"}
-          onButtonClick={handleResetButtonClick}
-        />
+        <SectionsCard cardType={"guesses"}>
+          <ResetButton
+            cardType={"resetButton"}
+            onButtonClick={handleResetButtonClick}
+          />
+        </SectionsCard>
         <SectionsCard cardType={"defs"}>
           <Typography>1. {definitions?.[0]}</Typography>
           {/* </SectionsCard>
