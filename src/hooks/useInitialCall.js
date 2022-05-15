@@ -12,7 +12,8 @@ const useInitialCall = () => {
   useEffect(() => {
     const f1 = async () => {
       setLoading(true);
-      const w = await andrewMeadApi();
+      // const w = await andrewMeadApi();
+      const w = { puzzle: "big star" };
       const temp = [];
       w.puzzle
         .split("")
@@ -40,7 +41,6 @@ const useInitialCall = () => {
         }));
       const def = await fetchDefinitions(wList.map((w) => w.word));
       setWords(wList);
-      console.log(wList);
       setLetters(temp);
       setDefinitions(def);
       setLoading(false);

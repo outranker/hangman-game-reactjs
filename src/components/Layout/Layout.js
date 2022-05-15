@@ -4,6 +4,7 @@ const Layout = ({ children }) => {
   return (
     <Box
       sx={{
+        border: "2px white dotted",
         display: "flex",
         alignItems: "center",
         alignContent: "center",

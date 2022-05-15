@@ -9,8 +9,9 @@ const StarsLayout = ({ words, loading }) => {
       <Box
         sx={{
           width: "100%",
+          height: { xs: "140px", lg: "71px" },
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: { xs: "column", lg: "row" },
           justifyContent: "center",
           alignItems: "center",
           alignContent: "center",

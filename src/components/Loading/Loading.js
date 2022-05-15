@@ -1,42 +1,25 @@
-// import React from "react";
-// import "./Loading.css";
-
-// const Loading = () => {
-//   return (
-//     <div className="wrap">
-//       <div className="page">
-//         <main className="container">
-//           <i className="loader --3"></i>
-//         </main>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Loading;
-
 import * as React from "react";
-import { styled } from "@mui/material/styles";
+// import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CircularProgress, {
   circularProgressClasses,
 } from "@mui/material/CircularProgress";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+// import LinearProgress, {
+//   linearProgressClasses,
+// } from "@mui/material/LinearProgress";
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
-  },
-}));
+// const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+//   height: 10,
+//   borderRadius: 5,
+//   [`&.${linearProgressClasses.colorPrimary}`]: {
+//     backgroundColor:
+//       theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
+//   },
+//   [`& .${linearProgressClasses.bar}`]: {
+//     borderRadius: 5,
+//     backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
+//   },
+// }));
 
 // Inspired by the former Facebook spinners.
 function FacebookCircularProgress(props) {

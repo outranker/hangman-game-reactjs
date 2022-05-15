@@ -1,12 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import useKeypress from "react-use-keypress";
-import { Box } from "@mui/material";
-import { keys } from "../utils";
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
+import { Box, Typography } from "@mui/material";
+import { keys, layout, showGameStatus, gameLogic } from "../utils";
 import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
+import SectionsCard from "../components/SectionsCard";
+
 const Main = () => {
   const [
     words,
@@ -24,103 +28,97 @@ const Main = () => {
     setButtonTrigger(!buttonTrigger);
   };
   const [uniqueLetters, setUniqueLetters] = useState([]);
+  const [hasWon, setHasWon] = useState(false);
   const [count, countReducer] = useCounterReducer();
-  console.log(words);
+  const keyboard = useRef();
+
+  const onChange = (input) => {
+    console.log("Input changed", input);
+  };
+
+  const onKeyPress = (button) => {
+    console.log("Button pressed", button);
+  };
+
   useKeypress(keys, (event) => {
-    if (count > 0) {
-      const press = event.key.toUpperCase();
-
-      if (!uniqueLetters.find((item) => item === press)) {
-        setUniqueLetters((u) => [...u, press]);
-        const flattenLetters = [...words.flatMap((m1) => m1.letters)];
-        console.log("this is flattenLetters", flattenLetters);
-        const letterIndex = flattenLetters.findIndex((l) => l.letter === press);
-        console.log("this is letterIndex", letterIndex);
-
-        // only decrement count if it's a wrong guess
-        if (letterIndex === -1) countReducer({ type: "decrement" });
-
-        if (letterIndex !== -1 && !flattenLetters[letterIndex].isFound) {
-          console.log("coming here?");
-          setWords(
-            words.map((m1) => {
-              return {
-                ...m1,
-                letters: m1.letters.map((l1) => {
-                  if (l1.letter === press) {
-                    return { ...l1, isFound: true };
-                  } else return l1;
-                }),
-              };
-            })
-          );
-        }
-      }
-    } else if (count === 0) {
-    } else {
-    }
+    gameLogic({
+      count,
+      hasWon,
+      uniqueLetters,
+      setUniqueLetters,
+      words,
+      countReducer,
+      setWords,
+      setHasWon,
+      event,
+    });
   });
 
   return (
     <>
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-          alignContent: "center",
-          flexDirection: "column",
-          width: {
-            sm: "100%",
-            md: "700px",
-            lg: "850px",
-          },
-          paddingTop: {
-            sm: "0px",
-            md: "160px",
-            lg: "260px",
-          },
-          // height: "100%",
-        }}
-        // style={{ border: "1px red solid" }}
+        sx={boxWrapperStyles}
+        style={{ padding: "5px", border: "1px red solid" }}
       >
-        <StarsLayout loading={loading} words={words} />
-        <div
-          style={{
+        <SectionsCard cardType={"stars"}>
+          <StarsLayout loading={loading} words={words} />
+        </SectionsCard>
+        <SectionsCard cardType={"guesses"}>
+          <Typography variant="h6">
+            Guesses remaining: {showGameStatus(count, hasWon, uniqueLetters)}
+          </Typography>
+        </SectionsCard>
+        <ResetButton
+          cardType={"resetButton"}
+          onButtonClick={handleResetButtonClick}
+        />
+        <SectionsCard cardType={"defs"}>
+          <Typography>1. {definitions?.[0]}</Typography>
+        </SectionsCard>
+        <SectionsCard cardType={"defs"}>
+          <Typography>2. {definitions?.[1]}</Typography>
+        </SectionsCard>
+        <Box
+          sx={{
+            display: {
+              md: "none",
+            },
             width: "100%",
-            border: "1px green solid",
+            color: "black",
           }}
         >
-          <div>
-            Guesses remaining: {count} {uniqueLetters}
-          </div>
-          <ResetButton onButtonClick={handleResetButtonClick} />
-          <div
-            style={{
-              display: "flex",
-              // flexFlow: "row nowrap",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              alignContent: "flex-start",
-            }}
-          >
-            1. <div>{definitions?.[0]}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              // flexFlow: "row nowrap",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              alignContent: "flex-start",
-            }}
-          >
-            2. <div>{definitions?.[1]}</div>
-          </div>
-        </div>
+          <SectionsCard>
+            <Keyboard
+              keyboardRef={(r) => (keyboard.current = r)}
+              layoutName={"default"}
+              layout={layout}
+              onChange={onChange}
+              onKeyPress={onKeyPress}
+            />
+          </SectionsCard>
+        </Box>
       </Box>
     </>
   );
 };
 
 export default Main;
+
+const boxWrapperStyles = {
+  display: "flex",
+  // justifyContent: "space-around",
+  alignItems: "center",
+  alignContent: "center",
+  flexDirection: "column",
+  height: "100%",
+  width: {
+    xs: "100%",
+    md: "700px",
+    lg: "850px",
+  },
+  paddingTop: {
+    sm: "0px",
+    md: "160px",
+    lg: "260px",
+  },
+};
