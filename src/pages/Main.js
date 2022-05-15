@@ -32,15 +32,10 @@ const Main = () => {
   const [count, countReducer] = useCounterReducer();
   const keyboard = useRef();
 
-  const onChange = (input) => {
-    console.log("Input changed", input);
-  };
-
   const onKeyPress = (button) => {
-    console.log("Button pressed", button);
+    callGameLogic({ key: button });
   };
-
-  useKeypress(keys, (event) => {
+  const callGameLogic = (event) => {
     gameLogic({
       count,
       hasWon,
@@ -52,6 +47,9 @@ const Main = () => {
       setHasWon,
       event,
     });
+  };
+  useKeypress(keys, (event) => {
+    callGameLogic(event);
   });
 
   return (
@@ -92,7 +90,6 @@ const Main = () => {
               keyboardRef={(r) => (keyboard.current = r)}
               layoutName={"default"}
               layout={layout}
-              onChange={onChange}
               onKeyPress={onKeyPress}
             />
           </SectionsCard>
