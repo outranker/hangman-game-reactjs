@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         alignItems: "center",
         alignContent: "center",
         flexDirection: "column",
-        backgroundColor: "black",
+        backgroundColor: "#060930",
         color: "white",
         height: "100vh",
         width: "100vw",
