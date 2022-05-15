@@ -18,7 +18,7 @@ import React from "react";
 //   }
 // };
 
-const SectionsCard = ({ xs, md, lg, children }) => {
+const SectionsCard = ({ xs, md, lg, customStyles, children }) => {
   return (
     <Box
       sx={{
@@ -28,6 +28,7 @@ const SectionsCard = ({ xs, md, lg, children }) => {
           lg: "60%",
         },
         heigh: "100%",
+        ...customStyles,
       }}
     >
       {children}
