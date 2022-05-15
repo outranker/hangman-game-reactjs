@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
     <Box
       sx={{
         // border: "2px white dotted",
-        padding: "12px",
+        // padding: "12px",
         paddingBottom: "40px",
         display: "flex",
         alignItems: "center",
