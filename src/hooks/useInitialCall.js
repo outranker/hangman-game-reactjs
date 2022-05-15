@@ -12,8 +12,8 @@ const useInitialCall = () => {
   useEffect(() => {
     const f1 = async () => {
       setLoading(true);
-      // const w = await andrewMeadApi();
-      const w = { puzzle: "big star" };
+      const w = await andrewMeadApi();
+      // const w = { puzzle: "big star" };
       const temp = [];
       w.puzzle
         .split("")
