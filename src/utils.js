@@ -1,5 +1,12 @@
 const layout = {
   default: [
+    "1 2 3 4 5 6 7 8 9 0",
+    "q w e r t y u i o p",
+    " a s d f g h j k l ",
+    "{lock} z x c v b n m {bksp}",
+    "{space}",
+  ],
+  packageDefault: [
     "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
     "{tab} q w e r t y u i o p [ ] \\",
     "{lock} a s d f g h j k l ; ' {enter}",
@@ -60,7 +67,7 @@ const keys = [
   "n",
   "m",
 ];
-layout.default = custom;
+layout.myDefault = custom;
 
 const showGameStatus = (count, hasWon, uniqueLetters) => {
   if (hasWon) {
