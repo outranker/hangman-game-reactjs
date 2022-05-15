@@ -26,6 +26,7 @@ const Main = () => {
   ] = useInitialCall();
   const handleResetButtonClick = () => {
     setButtonTrigger(!buttonTrigger);
+    setUniqueLetters([]);
   };
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
@@ -33,7 +34,7 @@ const Main = () => {
   const keyboard = useRef();
 
   const onKeyPress = (button) => {
-    callGameLogic({ key: button });
+    if (keys.includes(button)) callGameLogic({ key: button });
   };
   const callGameLogic = (event) => {
     gameLogic({
@@ -56,10 +57,12 @@ const Main = () => {
     <>
       <Box
         sx={boxWrapperStyles}
-        style={{
-          padding: "5px",
-          // border: "1px red solid"
-        }}
+        style={
+          {
+            // padding: "5px",
+            // border: "1px red solid"
+          }
+        }
       >
         <SectionsCard cardType={"stars"}>
           <StarsLayout loading={loading} words={words} />
