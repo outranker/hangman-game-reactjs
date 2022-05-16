@@ -10,6 +10,7 @@ import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 import SectionsCard from "../components/SectionsCard";
+import UniqueLettersGrid from "../components/UniqueLetters";
 
 const Main = () => {
   const [
@@ -50,6 +51,8 @@ const Main = () => {
     });
   };
   useKeypress(keys, (event) => {
+    console.log({ uniqueLetters });
+    console.log({ words });
     callGameLogic(event);
   });
 
@@ -71,6 +74,7 @@ const Main = () => {
           <Typography variant="h6">
             Guesses remaining: {showGameStatus(count, hasWon, uniqueLetters)}
           </Typography>
+          <UniqueLettersGrid uniqueLetters={uniqueLetters} words={words} />
         </SectionsCard>
         <SectionsCard cardType={"guesses"}>
           <ResetButton

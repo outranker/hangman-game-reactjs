@@ -96,7 +96,7 @@ const gameLogic = ({
     if (!uniqueLetters.find((item) => item === press)) {
       setUniqueLetters((u) => [...u, press]);
       const flattenLetters = [...words.flatMap((m1) => m1.letters)];
-
+      console.log({ flattenLetters });
       const letterIndex = flattenLetters.findIndex((l) => l.letter === press);
 
       // only decrement count if it's a wrong guess
