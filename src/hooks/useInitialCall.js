@@ -41,7 +41,16 @@ const useInitialCall = () => {
         }));
       const def = await fetchDefinitions(wList.map((w) => w.word));
       setWords(wList);
-      setLetters(temp);
+      setLetters(
+        temp
+          .reduce((unique, o) => {
+            if (!unique.some((obj) => obj.letter === o.letter)) {
+              unique.push(o);
+            }
+            return unique;
+          }, [])
+          .filter((filtered) => !filtered.isWhiteSpace)
+      );
       setDefinitions(def);
       setLoading(false);
     };

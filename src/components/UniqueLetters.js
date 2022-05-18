@@ -14,12 +14,13 @@ const Item = styled(Paper)(({ theme }) => ({
   color: "green",
 }));
 
-const UniqueLettersGrid = ({ uniqueLetters, words }) => {
+const UniqueLettersGrid = ({ letters, uniqueLetters, words }) => {
+  React.useEffect(() => {}, [uniqueLetters]);
   if (!uniqueLetters.length) return;
   const flattenLetters = [...words.flatMap((m1) => m1.letters)];
   const enrichedUniqueLetters = uniqueLetters
     .map((ul) => {
-      return flattenLetters.find((fl) => fl.letter === ul);
+      return letters.find((fl) => fl.letter === ul);
     })
     .filter((s) => s);
   console.log(enrichedUniqueLetters);

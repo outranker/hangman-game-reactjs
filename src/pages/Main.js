@@ -4,7 +4,8 @@ import useKeypress from "react-use-keypress";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { Box, Typography } from "@mui/material";
-import { keys, layout, showGameStatus, gameLogic } from "../utils";
+import { showGameStatus, gameLogic } from "../utils";
+import { keys, layout } from "../keys";
 import { useCounterReducer } from "../hooks/useCounter";
 import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
@@ -29,6 +30,7 @@ const Main = () => {
     setButtonTrigger(!buttonTrigger);
     setUniqueLetters([]);
   };
+  console.log({ letters });
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
   const [count, countReducer] = useCounterReducer();
@@ -72,9 +74,18 @@ const Main = () => {
         </SectionsCard>
         <SectionsCard cardType={"guesses"}>
           <Typography variant="h6">
-            Guesses remaining: {showGameStatus(count, hasWon, uniqueLetters)}
+            Guesses remaining:{" "}
+            {showGameStatus(
+              count,
+              hasWon,
+              uniqueLetters.map((u) => u.letter).join(",")
+            )}
           </Typography>
-          <UniqueLettersGrid uniqueLetters={uniqueLetters} words={words} />
+          <UniqueLettersGrid
+            letters={letters}
+            uniqueLetters={uniqueLetters}
+            words={words}
+          />
         </SectionsCard>
         <SectionsCard cardType={"guesses"}>
           <ResetButton
@@ -115,6 +126,7 @@ export default Main;
 
 const boxWrapperStyles = {
   display: "flex",
+  flexItems: "wrap",
   justifyContent: "space-around",
   alignItems: "center",
   alignContent: "center",

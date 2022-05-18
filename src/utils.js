@@ -1,73 +1,4 @@
-const layout = {
-  default: [
-    "1 2 3 4 5 6 7 8 9 0",
-    "q w e r t y u i o p",
-    " a s d f g h j k l ",
-    "{lock} z x c v b n m {bksp}",
-    "{space}",
-  ],
-  packageDefault: [
-    "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
-    "{tab} q w e r t y u i o p [ ] \\",
-    "{lock} a s d f g h j k l ; ' {enter}",
-    "{shift} z x c v b n m , . / {shift}",
-    ".com @ {space}",
-  ],
-  shift: [
-    "~ ! @ # $ % ^ &amp; * ( ) _ + {bksp}",
-    "{tab} Q W E R T Y U I O P { } |",
-    '{lock} A S D F G H J K L : " {enter}',
-    "{shift} Z X C V B N M &lt; &gt; ? {shift}",
-    ".com @ {space}",
-  ],
-};
-
-const custom = [
-  "1 2 3 4 5 6 7 8 9 0",
-  "q w e r t y u i o p",
-  "a s d f g h j k l",
-  "z x c v b n m",
-];
-
-const keys = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "0",
-  "q",
-  "w",
-  "e",
-  "r",
-  "t",
-  "y",
-  "u",
-  "i",
-  "o",
-  "p",
-  "a",
-  "s",
-  "d",
-  "f",
-  "g",
-  "h",
-  "j",
-  "k",
-  "l",
-  "z",
-  "x",
-  "c",
-  "v",
-  "b",
-  "n",
-  "m",
-];
-layout.myDefault = custom;
+import { nanoid } from "nanoid";
 
 const showGameStatus = (count, hasWon, uniqueLetters) => {
   if (hasWon) {
@@ -93,8 +24,8 @@ const gameLogic = ({
   if (count > 0 && hasWon === false) {
     const press = event.key.toUpperCase();
 
-    if (!uniqueLetters.find((item) => item === press)) {
-      setUniqueLetters((u) => [...u, press]);
+    if (!uniqueLetters.find((item) => item.letter === press)) {
+      setUniqueLetters((u) => [...u, { id: nanoid(), letter: press }]);
       const flattenLetters = [...words.flatMap((m1) => m1.letters)];
       console.log({ flattenLetters });
       const letterIndex = flattenLetters.findIndex((l) => l.letter === press);
@@ -132,4 +63,4 @@ const gameLogic = ({
   }
 };
 
-export { layout, keys, showGameStatus, gameLogic };
+export { showGameStatus, gameLogic };
