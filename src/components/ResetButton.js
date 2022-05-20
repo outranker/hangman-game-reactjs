@@ -4,11 +4,7 @@ import React from "react";
 const ResetButton = ({ onButtonClick }) => {
   return (
     <>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => onButtonClick()}
-      >
+      <Button variant="contained" color="primary" onClick={onButtonClick}>
         Reset
       </Button>
     </>

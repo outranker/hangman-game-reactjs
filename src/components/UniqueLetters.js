@@ -8,27 +8,27 @@ const Item = styled(Paper)(({ theme }) => ({
   width: { sx: "1.2rem", md: "1.4rem", lg: "1.8rem" },
   height: { sx: "1.8rem", md: "2rem", lg: "2.4rem" },
   backgroundColor: "#fff",
-  //   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  color: "green",
+  color: "white",
 }));
 
 const UniqueLettersGrid = ({ letters, uniqueLetters, words }) => {
   React.useEffect(() => {}, [uniqueLetters]);
   if (!uniqueLetters.length) return;
-  const flattenLetters = [...words.flatMap((m1) => m1.letters)];
-  const enrichedUniqueLetters = uniqueLetters
-    .map((ul) => {
-      return letters.find((fl) => fl.letter === ul);
-    })
-    .filter((s) => s);
-  console.log(enrichedUniqueLetters);
+
   return (
     <Box sx={{ width: "100%", height: "1.6rem" }}>
       <Stack direction="row" spacing={2}>
-        {enrichedUniqueLetters.map((eul) => (
-          <Item key={eul.id}>{eul.letter}</Item>
+        {uniqueLetters.map((ul) => (
+          <Item
+            sx={{
+              backgroundColor: ul.color === "green" ? "#66bb6a" : "#f44336",
+            }}
+            key={ul.id}
+          >
+            {ul.letter}
+          </Item>
         ))}
       </Stack>
     </Box>

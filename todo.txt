@@ -1,10 +1,10 @@
 1. fix stars loading position DONE
 2. handle when chances run out DONE
 3. handle when user wins the game DONE
-4. style guess letters: green: existing letter, red: non-existing letter
+4. style guess letters: green: existing letter, red: non-existing letter DONE
 5. add animation for when existing letter is input
 6. add skeleton for definitions
-7. make a component for definitions
+7. make a component for definitions SCRAPE
 
 
 

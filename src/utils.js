@@ -7,7 +7,7 @@ const showGameStatus = (count, hasWon, uniqueLetters) => {
   if (!hasWon && count === 0) {
     return "You lost! Give it another try?";
   }
-  return `${count} ${uniqueLetters}`;
+  return `${count} ${uniqueLetters || ""}`;
 };
 
 const gameLogic = ({
@@ -25,15 +25,18 @@ const gameLogic = ({
     const press = event.key.toUpperCase();
 
     if (!uniqueLetters.find((item) => item.letter === press)) {
-      setUniqueLetters((u) => [...u, { id: nanoid(), letter: press }]);
       const flattenLetters = [...words.flatMap((m1) => m1.letters)];
-      console.log({ flattenLetters });
+
       const letterIndex = flattenLetters.findIndex((l) => l.letter === press);
 
       // only decrement count if it's a wrong guess
       if (letterIndex === -1) countReducer({ type: "decrement" });
 
       if (letterIndex !== -1 && !flattenLetters[letterIndex].isFound) {
+        setUniqueLetters((u) => [
+          ...u,
+          { id: nanoid(), letter: press, color: "green" },
+        ]);
         const t = words.map((m1) => {
           return {
             ...m1,
@@ -51,11 +54,15 @@ const gameLogic = ({
           }
         }
         setWords(t);
-        console.log("this is c", c);
+
         if (c === 0) {
-          console.log("setting haswon state");
           setHasWon(true);
         }
+      } else {
+        setUniqueLetters((u) => [
+          ...u,
+          { id: nanoid(), letter: press, color: "red" },
+        ]);
       }
     }
   } else if (count === 0) {

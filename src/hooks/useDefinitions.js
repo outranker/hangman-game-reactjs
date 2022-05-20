@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchDefinitions } from "../api/definitions";
 
 const useDefinitions = (words) => {
-  console.log("calling!!!");
   const [definitions, setDefinitions] = useState([]);
   useEffect(() => {
     if (!words || words.length === 0) {

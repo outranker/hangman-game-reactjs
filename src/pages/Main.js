@@ -26,18 +26,20 @@ const Main = () => {
     buttonTrigger,
     setButtonTrigger,
   ] = useInitialCall();
-  const handleResetButtonClick = () => {
-    setButtonTrigger(!buttonTrigger);
-    setUniqueLetters([]);
-  };
-  console.log({ letters });
+
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
   const [count, countReducer] = useCounterReducer();
   const keyboard = useRef();
 
-  const onKeyPress = (button) => {
-    if (keys.includes(button)) callGameLogic({ key: button });
+  const handleResetButtonClick = () => {
+    setButtonTrigger(!buttonTrigger);
+    setUniqueLetters([]);
+    setDefinitions([]);
+    setLetters([]);
+    countReducer({ type: "restart" });
+    setHasWon(false);
+    return;
   };
   const callGameLogic = (event) => {
     gameLogic({
@@ -53,11 +55,12 @@ const Main = () => {
     });
   };
   useKeypress(keys, (event) => {
-    console.log({ uniqueLetters });
-    console.log({ words });
     callGameLogic(event);
   });
 
+  const onKeyPress = (button) => {
+    if (keys.includes(button)) callGameLogic({ key: button });
+  };
   return (
     <>
       <Box
@@ -77,8 +80,8 @@ const Main = () => {
             Guesses remaining:{" "}
             {showGameStatus(
               count,
-              hasWon,
-              uniqueLetters.map((u) => u.letter).join(",")
+              hasWon
+              // uniqueLetters.map((u) => u.letter).join(",")
             )}
           </Typography>
           <UniqueLettersGrid
@@ -108,10 +111,11 @@ const Main = () => {
             color: "black",
           }}
         >
-          <SectionsCard>
+          <SectionsCard customStyles={{ backgroundColor: "#194182" }}>
             <Keyboard
               keyboardRef={(r) => (keyboard.current = r)}
               layoutName={"default"}
+              backgroundColor="#72C8FF"
               layout={layout}
               onKeyPress={onKeyPress}
             />

@@ -6,6 +6,8 @@ const reducer = (state, action) => {
       return state + 1;
     case "decrement":
       return state - 1;
+    case "restart":
+      return 9;
     default:
       throw new Error();
   }

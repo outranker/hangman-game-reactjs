@@ -10,7 +10,6 @@ export const andrewMeadApi = async (count = 2) => {
       `https://puzzle.mead.io/puzzle?wordCount=${count}`
     );
     if (res.status <= 300 && res.status >= 200) {
-      console.log(res.data);
       return res.data;
     } else {
       throw new Error("random word api returned bad response code");
