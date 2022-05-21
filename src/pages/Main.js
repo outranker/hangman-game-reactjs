@@ -12,6 +12,7 @@ import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 import SectionsCard from "../components/SectionsCard";
 import UniqueLettersGrid from "../components/UniqueLetters";
+import Test from "../components/Test";
 
 const Main = () => {
   const [
@@ -102,6 +103,7 @@ const Main = () => {
         <SectionsCard cardType={"defs"}> */}
           <Typography>2. {definitions?.[1]}</Typography>
         </SectionsCard>
+        {/* <Test /> */}
         <Box
           sx={{
             display: {
