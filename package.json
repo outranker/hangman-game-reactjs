@@ -14,6 +14,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^3.3.3",
     "react": "^18.1.0",
+    "react-awesome-reveal": "^3.8.1",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",

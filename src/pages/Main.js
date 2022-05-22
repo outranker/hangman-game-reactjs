@@ -56,6 +56,10 @@ const Main = () => {
     });
   };
   useKeypress(keys, (event) => {
+    if (event.key.toLowerCase() === "enter") {
+      handleResetButtonClick();
+      return;
+    }
     callGameLogic(event);
   });
 
