@@ -12,6 +12,7 @@ import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 import SectionsCard from "../components/SectionsCard";
 import UniqueLettersGrid from "../components/UniqueLetters";
+import Shake from "../components/Shake";
 
 const Main = () => {
   const [
@@ -126,6 +127,7 @@ const Main = () => {
             />
           </SectionsCard>
         </Box>
+        <Shake />
       </Box>
     </>
   );
