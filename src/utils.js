@@ -20,6 +20,7 @@ const gameLogic = ({
   setWords,
   setHasWon,
   event,
+  fnLastLetter,
 }) => {
   if (count > 0 && hasWon === false) {
     const press = event.key.toUpperCase();
@@ -64,6 +65,8 @@ const gameLogic = ({
           { id: nanoid(), letter: press, color: "red" },
         ]);
       }
+    } else {
+      fnLastLetter(press);
     }
   } else if (count === 0) {
   } else {
