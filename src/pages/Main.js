@@ -65,7 +65,8 @@ const Main = () => {
   });
 
   const onKeyPress = (button) => {
-    if (keys.includes(button)) callGameLogic({ key: button });
+    if (keys.includes(button))
+      callGameLogic({ key: button }, setLastPressedLetter);
   };
   return (
     <>
