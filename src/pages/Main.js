@@ -102,9 +102,7 @@ const Main = () => {
             color: "black",
           }}
         >
-          <SectionsCard
-            customStyles={{ display: "none", backgroundColor: "#194182" }}
-          >
+          <SectionsCard customStyles={{ backgroundColor: "#194182" }}>
             <Keyboard
               keyboardRef={(r) => (keyboard.current = r)}
               layoutName={"default"}
