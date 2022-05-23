@@ -11,8 +11,7 @@ import useInitialCall from "../hooks/useInitialCall";
 import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 import SectionsCard from "../components/SectionsCard";
-import UniqueLettersGrid from "../components/UniqueLetters";
-import Shake from "../components/Shake";
+import UniqueLettersGrid from "../components/UniqueLetters/UniqueLetters";
 
 const Main = () => {
   const [
@@ -30,6 +29,7 @@ const Main = () => {
 
   const [uniqueLetters, setUniqueLetters] = useState([]);
   const [hasWon, setHasWon] = useState(false);
+  const [lastPressedLetter, setLastPressedLetter] = useState("");
   const [count, countReducer] = useCounterReducer();
   const keyboard = useRef();
 
@@ -42,7 +42,7 @@ const Main = () => {
     setHasWon(false);
     return;
   };
-  const callGameLogic = (event) => {
+  const callGameLogic = (event, fnLastLetter) => {
     gameLogic({
       count,
       hasWon,
@@ -53,6 +53,7 @@ const Main = () => {
       setWords,
       setHasWon,
       event,
+      fnLastLetter,
     });
   };
   useKeypress(keys, (event) => {
@@ -60,7 +61,7 @@ const Main = () => {
       handleResetButtonClick();
       return;
     }
-    callGameLogic(event);
+    callGameLogic(event, setLastPressedLetter);
   });
 
   const onKeyPress = (button) => {
@@ -68,31 +69,17 @@ const Main = () => {
   };
   return (
     <>
-      <Box
-        sx={boxWrapperStyles}
-        style={
-          {
-            // padding: "5px",
-            // border: "1px red solid"
-          }
-        }
-      >
+      <Box sx={boxWrapperStyles}>
         <SectionsCard cardType={"stars"}>
           <StarsLayout loading={loading} words={words} />
         </SectionsCard>
         <SectionsCard cardType={"guesses"}>
           <Typography variant="h6">
-            Guesses remaining:{" "}
-            {showGameStatus(
-              count,
-              hasWon
-              // uniqueLetters.map((u) => u.letter).join(",")
-            )}
+            Guesses remaining: {showGameStatus(count, hasWon)}
           </Typography>
           <UniqueLettersGrid
-            letters={letters}
             uniqueLetters={uniqueLetters}
-            words={words}
+            lastPressedLetter={lastPressedLetter}
           />
         </SectionsCard>
         <SectionsCard cardType={"guesses"}>
@@ -103,8 +90,6 @@ const Main = () => {
         </SectionsCard>
         <SectionsCard cardType={"defs"}>
           <Typography>1. {definitions?.[0]}</Typography>
-          {/* </SectionsCard>
-        <SectionsCard cardType={"defs"}> */}
           <Typography>2. {definitions?.[1]}</Typography>
         </SectionsCard>
 
@@ -127,7 +112,6 @@ const Main = () => {
             />
           </SectionsCard>
         </Box>
-        <Shake />
       </Box>
     </>
   );
