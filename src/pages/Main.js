@@ -12,6 +12,7 @@ import ResetButton from "../components/ResetButton";
 import StarsLayout from "../components/Stars/StarsLayout";
 import SectionsCard from "../components/SectionsCard";
 import UniqueLettersGrid from "../components/UniqueLetters";
+import Shake from "../components/Shake";
 
 const Main = () => {
   const [
@@ -55,6 +56,10 @@ const Main = () => {
     });
   };
   useKeypress(keys, (event) => {
+    if (event.key.toLowerCase() === "enter") {
+      handleResetButtonClick();
+      return;
+    }
     callGameLogic(event);
   });
 
@@ -102,6 +107,7 @@ const Main = () => {
         <SectionsCard cardType={"defs"}> */}
           <Typography>2. {definitions?.[1]}</Typography>
         </SectionsCard>
+
         <Box
           sx={{
             display: {
@@ -121,6 +127,7 @@ const Main = () => {
             />
           </SectionsCard>
         </Box>
+        <Shake />
       </Box>
     </>
   );

@@ -66,6 +66,7 @@ const keys = [
   "b",
   "n",
   "m",
+  "Enter",
 ];
 layout.myDefault = custom;
 
