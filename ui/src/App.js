@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import Layout from "./components/Layout";
@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import theme from "./styles/theme";
 
 const App = () => {
+  const [wasmState, setWasmState] = useState({});
   useEffect(() => {
     const instantiate = async () => {
       let { instance, module } = await WebAssembly.instantiateStreaming(
@@ -13,7 +14,7 @@ const App = () => {
         window.go.importObject
       );
       await window.go.run(instance);
-      this.setState({
+      setWasmState({
         mod: module,
         inst: instance,
       });
