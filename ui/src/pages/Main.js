@@ -95,8 +95,8 @@ const Main = () => {
           <Typography>1. {definitions?.[0]}</Typography>
           <Typography>2. {definitions?.[1]}</Typography>
         </SectionsCard>
-        <div id="message"></div>
-        <button onClick={wasmButtonClick}>click me!</button>
+        {/* <div id="message"></div>
+        <button onClick={wasmButtonClick}>click me!</button> */}
         <Box
           sx={{
             display: {
